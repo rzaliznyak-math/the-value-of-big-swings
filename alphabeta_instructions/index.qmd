@@ -1,0 +1,37 @@
+---
+title: "How to Use the AlphaBeta Testing App"
+subtitle: For Rate-Based and Continuous Metrics
+author: "Russ Zaliznyak"
+date: "2024-11-18"
+execute:
+  echo: false
+format: 
+  html:
+    code-fold: show
+    css: style.css
+    toc: true
+    toc-expand: true
+    toc-indent: 1em
+jupyter: python3
+---
+
+
+## Introduction
+
+Dear Prospective App User, 
+
+Our [**Alphabeta Testing App (in/alphabeta)**](https://de.dash.a.intuit.com/alphabeta){target="_blank"} allows you to end AB tests in less than half the time of a significance test. We achieve this speed by analyzing results daily with Bayesian AB Tests.
+
+If anything in this wiki is unclear or outdated, we’d appreciate direct comments in our slack channel [**#ab-testing-and-causal-inference [slack]**](https://intuit-teams.slack.com/archives/C05BN8CSSHH){target="_blank"}.
+
+Sincerely,<br>
+Russ Zaliznyak & Joe Powers
+
+## Training Sessions
+
+You can view this previous [**Bayesian AB Test training session**](https://drive.google.com/file/d/1n_G36qghCw-fqN1YmEzxPK4ujaSJghOo/view?usp=drive_link){target="_blank"}.
+
+
+- 00min - 30min focuses on explaining concepts of Risk and Bayesian Testing
+- 30min - 44min focuses on the Sample Size Calculator
+- 44min - 55min focuses on AB Testing App
