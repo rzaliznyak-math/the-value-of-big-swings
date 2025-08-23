@@ -1,0 +1,197 @@
+---
+title: "The Value of Transformational AB Tests"
+subtitle: "Small Wins or Big Swings: Which Delivers More Value?"
+author: "Russ Zaliznyak <[rzaliznyak@gmail.com](mailto:rzaliznyak@gmail.com)>"
+date: "2025-08-25"
+execute: 
+  echo: false
+format: 
+  html: 
+    toc: true
+    toc-expand: true
+    toc-indent: true
+---
+
+# AB Testing
+
+The tech world uses A/B testing not only to validate hypotheses, but to maximize business outcomes like conversion, retention, and revenue. But what's a more profitable testing strategy? 
+
+1. **Bunting**: Many small improvements over time
+2. **Swing for the Fences**: One potentially HUGE transformational win
+---
+
+# Experiment Design 
+
+The below will serve as our base example experiment.
+
+| Min (Test Days) | Max (Test Days) | Max (Test N) | Post Test N | Baseline | Split |
+|-----------------|-----------------|--------------|-------------|----------|-------|
+| 7               | 20              | 80,000       | 500,000     | 65%      | 50/50 |
+
+<br>
+Should we go for lots of little improvements over time? Or should we try for a big transformational change?
+
+# Which Testing Strategy Generates More Value
+
+Let's compare the two competing strategies below:
+
+1. **10** Experiments with Guaranteed Small Wins
+2. **1** Transformational Experiment
+
+<!-- One-time styles -->
+<style>
+img.framed { border:1px solid #ddd; border-radius:8px; padding:6px; }
+.tile-label { text-align:center; font-weight:600; margin-bottom:6px; }
+.tile-sub { text-align:center; font-style:italic; font-size:0.9em; margin-bottom:10px; }
+</style>
+
+::: {.columns}
+::: {.column width="50%"}
+<div class="tile-label">Distribution of Guaranteed Small Wins</div>
+![](./assets/small.png){fig-alt="Expected treatment effects, small wins" width="100%" .framed}
+
+- Effects densely packed around 100.1  
+- Only small positive effects
+:::
+
+::: {.column width="50%"}
+<div class="tile-label">Distribution of Transformational Experiment</div>
+![](./assets/big.png){fig-alt="Expected treatment effects, transformational" width="100%" .framed}
+
+- μ = 99.5, σ = 2.25  
+- 60% harmful ideas  
+- High upside potential
+:::
+:::
+
+
+# Simulation Framework
+
+To evaluate these strategies, I simulate **30,000 randomized A/B tests in each of two distinct distributions**: one representing **Guaranteed Wins**, with tightly clustered positive effects just above baseline, and one representing **Transformational Ideas**, with a wider spread, higher upside, and meaningful downside.
+
+Each simulation samples a true effect from its distribution, while decisions are made using noisy, observed outcomes — mirroring real-world test uncertainty. Final comparisons focus on average marginal impact.
+
+## Definition
+
+A measure that quantifies the risk of making the wrong decision, combining both the likelihood of harm and its expected magnitude:
+
+$$
+\text{Expected Loss} = \Pr(\text{harm}) \times \mathbb{E}[\text{Magnitude of Harm}]
+$$
+
+We’ll refer to expected loss simply as **`Risk`**. 
+
+
+## Evaluation Approach
+
+1. For each simulation, and each day on or after `Min (Test Days)`:
+   - Compute **Risk (expected loss)** for both control and treatment conditions.
+   - Compare each condition’s **Risk** to the **Risk Threshold = 0.025%**.
+
+2. Decision rules:
+   - If **only one** condition breaches the threshold → select it as the winner.
+   - If **both** breach → choose the condition with the **lower risk**.
+   - If **neither** breaches by the end of the test → select the condition with the **lowest final risk**.
+
+3. After selecting a winner:
+   - Simulate rolling out the winner to the **remaining test population** and the **post-test population**, regardless of whether it was truly best.
+
+## Results
+
+All metrics shown are based on 30,000 simulations and represent expected values, i.e., average outcomes aggregated across all simulated experiments --- with each simulation drawing a random treatment effect from its distribution of effects.
+
+| Metric                        | One Guaranteed Win Experiment | One Transformational Experiment |
+|------------------------------|-------------------------------|---------------------------------|
+| **Risk Threshold**           | 0.025%                        | 0.025%                          |
+| **Selected Best Condition**  | 57.69%                        | 58.56%                          |
+| **Marginal Events vs No Test** | 216                          | 2,261                           |
+| **Projected Mean @ Year-End** | 65.037%                      | 65.390%                         |
+| **Mean Bayesian Test**       | N = 59,516 (15 days)          | N = 38,713 (10 days)            |
+
+
+<br>
+
+Ten guaranteed wins produces approximately 2,160 marginal events on average. However, this requires exposing ~5.8 million users (10 × 580k total per experiment) across the full test and post-test lifecycle.
+
+One transformational experiment generates an average of ~2,261 marginal events, but with just a single experiment and total test + post test population of 580k users. Each transformational experiment runs 33% faster.
+
+These results suggest that, on average, both strategies deliver similar marginal impact, but transformational testing is far more efficient in user exposure and testing effort.
+
+# Home Runs Outweigh Strikeouts
+
+How can it be that a strategy with a 60% strike-out ratio is so profitable on average?<br><br>
+Our **Bayesian methods** apply a continuous decision framework that adapts as data arrives — allowing fast termination of harmful variants and early promotion of strong performers. 
+
+
+Let's review what happens when our **Transformational** experiment is a complete DUD or a winner.
+
+
+```{python}
+
+import plotly.graph_objects as go
+
+# Data
+itc_values = [97, 98, 99, 99.5, 100.5, 101, 102]
+conversions = [-274, -200, -250, -400, 1500, 3500, 7300]
+labels = [str(v) for v in itc_values]  # Convert to strings for categorical x-axis
+colors = ['red' if val < 0 else 'green' for val in conversions]
+
+# Create bar chart
+fig = go.Figure(data=[
+    go.Bar(
+        x=labels,
+        y=conversions,
+        marker_color=colors,
+        text=[f'{val:+}' for val in conversions],
+        textposition='outside'
+    )
+])
+
+# Layout settings
+fig.update_layout(
+    title="Marginal Events by Index-to-Control (ITC) Value",
+    xaxis_title="ITC Value",
+    yaxis_title="Marginal Events (Conversions)",
+    template='plotly_white',
+    yaxis=dict(zeroline=True, zerolinecolor='black'),
+    bargap=0.3
+)
+
+fig.show()
+
+
+
+```
+
+<!--
+| ITC Value   | 97     | 98     | 99     | 99.5   | 100.5  | 101    | 102    |
+|-------------|--------|--------|--------|--------|--------|--------|--------|
+| Marginal Events | -274   | -200   | -250   | -400   | +1500  | +3500  | +7300  |
+-->
+
+<br>
+
+Risk-based testing makes transformational strategies more efficient and impactful — a single high-performing variant can easily outweigh multiple duds, justifying the risk.
+
+
+
+# Conclusion
+
+Both strategies yield similar marginal impact on average, but transformational testing is far more efficient in terms of user exposure and testing effort. While riskier, its upside far outweighs the downside — and Bayesian methods help manage that risk.
+
+
+**Recommendation**: Favor transformational tests when possible — they offer greater efficiency and potential upside, especially when user exposure is limited.
+
+But consider that a **hybrid strategy** can be a smart choice: guaranteed wins provide steady progress and risk coverage, while transformational swings create space for breakthrough gains. Together, they offer a balanced path to both stability and scale.
+
+
+
+
+<!--
+
+::: {.callout-note}
+### Prompt for Reflection
+- Do you prefer the steady compounding of **small, safe wins** or the risky **big swing** with transformational potential?  
+- How should your organization weigh **risk vs. upside** when running AB tests?  
+:::
+-->
