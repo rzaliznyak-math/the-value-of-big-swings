@@ -14,29 +14,41 @@ format:
 
 # AB Testing
 
-The tech world uses A/B testing not only to validate hypotheses, but to maximize business outcomes like conversion, retention, and revenue. But what's a more profitable testing strategy? 
+A/B testing isn’t just for testing hypotheses — it’s a tool for improving business outcomes like conversion, retention, and revenue. But in practice, experimentation forces a choice:
 
-1. **Bunting**: Many small improvements over time
-2. **Swing for the Fences**: One potentially HUGE transformational win
+1. **Play it safe** with frequent, incremental wins  
+2. **Swing big** with fewer, transformational tests that carry more risk — but potentially far greater upside
+
+The question becomes: how should we allocate testing effort when traffic and time are limited?
+
+This paper explores two competing strategies:
+
+- **Guaranteed Small Wins** — 10 safe bets with low downside and small, consistent gains  
+- **Transformational Tests** — a single high-variance bet with the potential to be a dud or a game-changer
+
+Which delivers more value? Which uses users more efficiently?
+
+
 ---
 
 # Experiment Design 
 
-The below will serve as our base example experiment.
+To ground this comparison in a concrete scenario, I define a base experiment with the following parameters:
 
 | Min (Test Days) | Max (Test Days) | Max (Test N) | Post Test N | Baseline | Split |
 |-----------------|-----------------|--------------|-------------|----------|-------|
 | 7               | 20              | 80,000       | 500,000     | 65%      | 50/50 |
 
 <br>
-Should we go for lots of little improvements over time? Or should we try for a big transformational change?
+This setup reflects a common A/B testing environment: experiments run between 7 and 20 days, with a capped sample size during the test phase, followed by rollout to a larger post-test population.
 
-# Which Testing Strategy Generates More Value
+To evaluate strategic tradeoffs, I simulate two competing approaches:
 
-Let's compare the two competing strategies below:
+1. **Guaranteed Small Wins** – Ten low-risk experiments, each drawing from a tightly clustered distribution of small positive effects.
+2. **One Transformational Experiment** – A single, riskier test drawing from a broader distribution with higher variance, including both harmful and high-upside ideas.
 
-1. **10** Experiments with Guaranteed Small Wins
-2. **1** Transformational Experiment
+Each strategy uses the same total user exposure (580k) per experiment. The goal is to assess which testing strategy delivers more value.
+
 
 <!-- One-time styles -->
 <style>
@@ -67,7 +79,7 @@ img.framed { border:1px solid #ddd; border-radius:8px; padding:6px; }
 
 # Simulation Framework
 
-To evaluate these strategies, I simulate **30,000 randomized A/B tests in each of two distinct distributions**: one representing **Guaranteed Wins**, with tightly clustered positive effects just above baseline, and one representing **Transformational Ideas**, with a wider spread, higher upside, and meaningful downside.
+To evaluate these strategies, I simulate **30,000 randomized A/B tests** in each of two distinct distributions: one representing **Guaranteed Wins**, with tightly clustered positive effects just above baseline, and one representing **Transformational Ideas**, with a wider spread, higher upside, and meaningful downside.
 
 Each simulation samples a true effect from its distribution, while decisions are made using noisy, observed outcomes — mirroring real-world test uncertainty. Final comparisons focus on average marginal impact.
 
@@ -132,7 +144,7 @@ import plotly.graph_objects as go
 
 # Data
 itc_values = [97, 98, 99, 99.5, 100.5, 101, 102]
-conversions = [-274, -200, -250, -400, 1500, 3500, 7300]
+conversions = [-274, -200, -250, -390, 1500, 3500, 7300]
 labels = [str(v) for v in itc_values]  # Convert to strings for categorical x-axis
 colors = ['red' if val < 0 else 'green' for val in conversions]
 
