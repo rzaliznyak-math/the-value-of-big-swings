@@ -120,7 +120,7 @@ These results suggest that, on average, both strategies deliver similar marginal
 # Home Runs Outweigh Strikeouts
 
 How can it be that a strategy with a 60% strike-out ratio is so profitable on average?<br><br>
-Our **Bayesian methods** apply a continuous decision framework that adapts as data arrives — allowing fast termination of harmful variants and early promotion of strong performers. 
+**Risk-Based Bayesian Testing** applies a continuous decision framework that adapts as data arrives — allowing fast termination of harmful variants and early promotion of strong performers. 
 
 
 Let's review what happens when our **Transformational** experiment is a complete DUD or a winner.
@@ -184,10 +184,26 @@ Both strategies yield similar marginal impact on average, but transformational t
 
 But consider that a **hybrid strategy** can be a smart choice: guaranteed wins provide steady progress and risk coverage, while transformational swings create space for breakthrough gains. Together, they offer a balanced path to both stability and scale.
 
+<br>
+
+::: {.callout-note collapse="false" icon="💬" title="<b>Interested in this topic?</b>"}
+
+<div style="font-size: 110%">
+
+Feel free to reach out if you’d like to discuss **experimentation strategy**, **simulation design**, or **Bayesian A/B testing**.  
+I'm always happy to trade ideas or go deeper on the details.
+
+📩 **Email:** [rzaliznyak@gmail.com](mailto:rzaliznyak@gmail.com)
+
+</div>
+
+:::
 
 
 
 <!--
+
+
 
 ::: {.callout-note}
 ### Prompt for Reflection
