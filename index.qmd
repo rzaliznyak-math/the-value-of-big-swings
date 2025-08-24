@@ -12,21 +12,21 @@ format:
     toc-indent: true
 ---
 
-# AB Testing
+# TL/DR
 
-A/B testing isn’t just for testing hypotheses — it’s a tool for improving business outcomes like conversion, retention, and revenue. But in practice, experimentation forces a choice:
+A/B testing is a tool for driving business outcomes like conversion, retention, and revenue. But in practice, experimenters often face a strategic dilemma:
 
-1. **Play it safe** with frequent, incremental wins  
-2. **Swing big** with fewer, transformational tests that carry more risk — but potentially far greater upside
+- **Play it safe** with frequent, incremental wins  
+- **Swing big** with fewer, riskier tests that promise outsized returns  
 
-The question becomes: how should we allocate testing effort when traffic and time are limited?
+This tradeoff is well-known in the experimentation community — a recurring challenge when traffic is limited and the stakes are high.
 
-This paper explores two competing strategies:
+This paper compares two strategies:
 
-- **Guaranteed Small Wins** — 10 safe bets with low downside and small, consistent gains  
-- **Transformational Tests** — a single high-variance bet with the potential to be a dud or a game-changer
+- **Guaranteed Small Wins** — ten low-risk bets with small, consistent gains  
+- **Transformational Tests** — a single high-variance bet that could flop — or deliver a breakthrough
 
-Which delivers more value? Which uses users more efficiently?
+Which strategy delivers more value? Which uses users more efficiently?
 
 
 ---
@@ -44,10 +44,10 @@ This setup reflects a common A/B testing environment: experiments run between 7 
 
 To evaluate strategic tradeoffs, I simulate two competing approaches:
 
-1. **Guaranteed Small Wins** – Ten low-risk experiments, each drawing from a tightly clustered distribution of small positive effects.
-2. **One Transformational Experiment** – A single, riskier test drawing from a broader distribution with higher variance, including both harmful and high-upside ideas.
+1. **Guaranteed Small Wins**: Ten low-risk experiments, each drawing from a tightly clustered distribution of small positive effects.
+2. **One Transformational Experiment**: A single, riskier test drawing from a broader distribution with higher variance, including both harmful and high-upside ideas.
 
-Each strategy uses the same total user exposure (580k) per experiment. The goal is to assess which testing strategy delivers more value.
+Guaranteed Wins use ~5.8 million users across ten tests. The Transformational strategy achieves comparable impact with just 580k — one-tenth the cost in traffic.
 
 
 <!-- One-time styles -->
@@ -81,7 +81,7 @@ img.framed { border:1px solid #ddd; border-radius:8px; padding:6px; }
 
 To evaluate these strategies, I simulate **30,000 randomized A/B tests** in each of two distinct distributions: one representing **Guaranteed Wins**, with tightly clustered positive effects just above baseline, and one representing **Transformational Ideas**, with a wider spread, higher upside, and meaningful downside.
 
-Each simulation samples a true effect from its distribution, while decisions are made using noisy, observed outcomes — mirroring real-world test uncertainty. Final comparisons focus on average marginal impact.
+Each simulation samples a random true effect from its distribution, while decisions are made using noisy, observed outcomes — mirroring real-world test uncertainty. Final comparisons focus on average marginal impact.
 
 ## Definition
 
@@ -91,7 +91,7 @@ $$
 \text{Expected Loss} = \Pr(\text{harm}) \times \mathbb{E}[\text{Magnitude of Harm}]
 $$
 
-We’ll refer to expected loss simply as **`Risk`**. 
+We’ll refer to expected loss simply as **`Risk`**. This is used as a stopping criteria below.
 
 
 ## Evaluation Approach
@@ -102,11 +102,11 @@ We’ll refer to expected loss simply as **`Risk`**.
 
 2. Decision rules:
    - If **only one** condition breaches the threshold → select it as the winner.
-   - If **both** breach → choose the condition with the **lower risk**.
-   - If **neither** breaches by the end of the test → select the condition with the **lowest final risk**.
+   - If **both** breach → choose the condition with the lower risk.
+   - If **neither** breaches by the end of the test → select the condition with the lowest final risk.
 
 3. After selecting a winner:
-   - Simulate rolling out the winner to the **remaining test population** and the **post-test population**, regardless of whether it was truly best.
+   - Simulate rolling out the winner to the remaining test population and the post-test population, regardless of whether it was truly best.
 
 ## Results
 
@@ -131,11 +131,12 @@ These results suggest that, on average, both strategies deliver similar marginal
 
 # Home Runs Outweigh Strikeouts
 
-How can it be that a strategy with a 60% strike-out ratio is so profitable on average?<br><br>
-**Risk-Based Bayesian Testing** applies a continuous decision framework that adapts as data arrives — allowing fast termination of harmful variants and early promotion of strong performers. 
+How can a strategy with a 60% strikeout rate still outperform?
 
+Because when a transformational idea hits, it hits big. Risk-based testing helps cut losses early while allowing strong performers to scale — letting a single home run outweigh several duds.
 
-Let's review what happens when our **Transformational** experiment is a complete DUD or a winner.
+That’s the asymmetric nature of upside: most variants may underperform, but the rare wins more than make up the difference.
+
 
 
 ```{python}
@@ -186,24 +187,31 @@ fig.show()
 Risk-based testing makes transformational strategies more efficient and impactful — a single high-performing variant can easily outweigh multiple duds, justifying the risk.
 
 
-
 # Conclusion
 
-Both strategies yield similar marginal impact on average, but transformational testing is far more efficient in terms of user exposure and testing effort. While riskier, its upside far outweighs the downside — and Bayesian methods help manage that risk.
+Both strategies yield similar marginal impact on average — but transformational testing is **far more efficient**, requiring fewer users, less time, and fewer tests to achieve comparable results.
+
+While riskier, the upside of transformational experiments dramatically outweighs the downside when paired with a smart decision framework. In environments where time and traffic are limited, this efficiency becomes a strategic advantage.
+
+# Recommendation
+
+**Favor transformational tests when possible** — they unlock greater value per user and per test.  
+
+That said, a **hybrid approach** can provide balance: guaranteed wins deliver stability and coverage, while bold swings create room for breakthrough gains. Together, they offer a path that scales.
+
+---
 
 
-**Recommendation**: Favor transformational tests when possible — they offer greater efficiency and potential upside, especially when user exposure is limited.
 
-But consider that a **hybrid strategy** can be a smart choice: guaranteed wins provide steady progress and risk coverage, while transformational swings create space for breakthrough gains. Together, they offer a balanced path to both stability and scale.
 
-<br>
-
-::: {.callout-note collapse="false" icon="💬" title="<b>Interested in this topic?</b>"}
+::: {.callout-note collapse="false" icon="💬" title="<b>About Me</b>"}
 
 <div style="font-size: 110%">
 
-Feel free to reach out if you’d like to discuss **experimentation strategy**, **simulation design**, or **Bayesian A/B testing**.  
-I'm always happy to trade ideas or go deeper on the details.
+
+I work on experimentation systems, Bayesian optimization, and simulation-driven decision-making. My recent work includes Bayesian long-term optimization, informed priors, and CUPED.
+
+If you're thinking about experimentation strategy, simulation design, or testing frameworks — I'd love to connect. Always happy to trade ideas or dig deeper into what drives meaningful impact.
 
 📩 **Email:** [rzaliznyak@gmail.com](mailto:rzaliznyak@gmail.com)
 
