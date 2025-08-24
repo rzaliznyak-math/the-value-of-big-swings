@@ -26,7 +26,7 @@ This paper compares two strategies:
 - **Guaranteed Small Wins** — ten low-risk bets with small, consistent gains  
 - **Transformational Tests** — a single high-variance bet that could flop — or deliver a breakthrough
 
-Which strategy delivers more value? Which uses users more efficiently?
+Which strategy delivers more value on average?
 
 
 ---
@@ -46,8 +46,6 @@ To evaluate strategic tradeoffs, I simulate two competing approaches:
 
 1. **Guaranteed Small Wins**: Ten low-risk experiments, each drawing from a tightly clustered distribution of small positive effects.
 2. **One Transformational Experiment**: A single, riskier test drawing from a broader distribution with higher variance, including both harmful and high-upside ideas.
-
-Guaranteed Wins use ~5.8 million users across ten tests. The Transformational strategy achieves comparable impact with just 580k — one-tenth the cost in traffic.
 
 
 <!-- One-time styles -->
@@ -123,11 +121,10 @@ All metrics shown are based on 30,000 simulations and represent expected values,
 
 <br>
 
-Ten guaranteed wins produces approximately 2,160 marginal events on average. However, this requires exposing ~5.8 million users (10 × 580k total per experiment) across the full test and post-test lifecycle.
+On average, ten guaranteed-win experiments produce ~2,160 marginal events — but require ~5.8 million users across the full test and post-test lifecycle.<br>
+One transformational experiment delivers a comparable ~2,261 marginal events on average, using just 580k users and completing 33% faster.
 
-One transformational experiment generates an average of ~2,261 marginal events, but with just a single experiment and total test + post test population of 580k users. Each transformational experiment runs 33% faster.
-
-These results suggest that, on average, both strategies deliver similar marginal impact, but transformational testing is far more efficient in user exposure and testing effort.
+While both strategies yield similar impact on average, transformational testing is far more efficient — achieving comparable value with one-tenth the traffic on average.
 
 # Home Runs Outweigh Strikeouts
 
@@ -195,7 +192,7 @@ While riskier, the upside of transformational experiments dramatically outweighs
 
 # Recommendation
 
-**Favor transformational tests when possible** — they unlock greater value per user and per test.  
+**Favor transformational tests when possible** because they unlock greater value per user and per test.  
 
 That said, a **hybrid approach** can provide balance: guaranteed wins deliver stability and coverage, while bold swings create room for breakthrough gains. Together, they offer a path that scales.
 
