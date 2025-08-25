@@ -1,6 +1,6 @@
 ---
-title: "The Value of Transformational AB Tests"
-subtitle: "Small Wins or Big Swings: Which Delivers More Value?"
+title: "The Value of Big Swings"
+subtitle: "Why Playing It Safe in A/B Testing Might Be Holding You Back"
 author: "Russ Zaliznyak <[rzaliznyak@gmail.com](mailto:rzaliznyak@gmail.com)>"
 date: "2025-08-25"
 execute: 
