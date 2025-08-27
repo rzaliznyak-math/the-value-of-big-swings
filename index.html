@@ -96,10 +96,11 @@ window.Quarto = {
    
   <ul>
   <li><a href="#tldr" id="toc-tldr" class="nav-link active" data-scroll-target="#tldr">TL/DR</a></li>
-  <li><a href="#experiment-design" id="toc-experiment-design" class="nav-link" data-scroll-target="#experiment-design">Experiment Design</a></li>
-  <li><a href="#simulation-framework" id="toc-simulation-framework" class="nav-link" data-scroll-target="#simulation-framework">Simulation Framework</a>
+  <li><a href="#ab-test-design" id="toc-ab-test-design" class="nav-link" data-scroll-target="#ab-test-design">A/B Test Design</a></li>
+  <li><a href="#strategy-comparison" id="toc-strategy-comparison" class="nav-link" data-scroll-target="#strategy-comparison">Strategy Comparison</a>
   <ul class="collapse">
-  <li><a href="#definition" id="toc-definition" class="nav-link" data-scroll-target="#definition">Definition</a></li>
+  <li><a href="#simulation-framework" id="toc-simulation-framework" class="nav-link" data-scroll-target="#simulation-framework">Simulation Framework</a></li>
+  <li><a href="#stopping-threshold" id="toc-stopping-threshold" class="nav-link" data-scroll-target="#stopping-threshold">Stopping Threshold</a></li>
   <li><a href="#evaluation-approach" id="toc-evaluation-approach" class="nav-link" data-scroll-target="#evaluation-approach">Evaluation Approach</a></li>
   <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a></li>
   </ul></li>
@@ -114,7 +115,7 @@ window.Quarto = {
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">The Value of Big Swings</h1>
-<p class="subtitle lead">Why Playing It Safe in A/B Testing Might Be Holding You Back</p>
+<p class="subtitle lead">Why Bold Experiments Deliver More Value with Less Traffic</p>
 </div>
 
 
@@ -145,48 +146,45 @@ window.Quarto = {
 
 <section id="tldr" class="level1">
 <h1>TL/DR</h1>
-<p>A/B testing is a tool for driving business outcomes like conversion, retention, and revenue. But in practice, experimenters often face a strategic dilemma:</p>
+<p>Smart A/B testing helps to maximize business metrics like conversion, retention, and revenue. But experimenters often face a strategic dilemma:</p>
 <ul>
 <li><strong>Play it safe</strong> with frequent, incremental wins<br>
 </li>
-<li><strong>Swing big</strong> with fewer, riskier tests that promise outsized returns</li>
+<li><strong>Swing big</strong> with fewer, riskier tests that could deliver big rewards</li>
 </ul>
-<p>This tradeoff is well-known in the experimentation community — a recurring challenge when traffic is limited and the stakes are high.</p>
-<p>This paper compares two strategies:</p>
-<ul>
-<li><strong>Guaranteed Small Wins</strong> — ten low-risk bets with small, consistent gains<br>
+<p>This tradeoff is a recurring challenge when traffic is limited and profits need to grow.</p>
+<p>This paper compares two distinct strategies:</p>
+<ol type="1">
+<li><strong>Guaranteed Small Wins</strong>: ten low-risk bets with small, consistent gains<br>
 </li>
-<li><strong>Transformational Tests</strong> — a single high-variance bet that could flop — or deliver a breakthrough</li>
-</ul>
+<li><strong>Big Swing</strong>: single high-variance transformational bet that could flop — or deliver a breakthrough</li>
+</ol>
 <p>Which strategy delivers more value on average?</p>
 <hr>
 </section>
-<section id="experiment-design" class="level1">
-<h1>Experiment Design</h1>
-<p>To ground this comparison in a concrete scenario, I define a base experiment with the following parameters:</p>
+<section id="ab-test-design" class="level1">
+<h1>A/B Test Design</h1>
+<p>To ground the comparison, I define a base experiment with these parameters:</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 21%">
-<col style="width: 21%">
-<col style="width: 17%">
+<col style="width: 29%">
 <col style="width: 16%">
-<col style="width: 12%">
-<col style="width: 8%">
+<col style="width: 17%">
+<col style="width: 28%">
+<col style="width: 9%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>Min (Test Days)</th>
-<th>Max (Test Days)</th>
-<th>Max (Test N)</th>
-<th>Post Test N</th>
-<th>Baseline</th>
+<th>Test Days (Min–Max)</th>
+<th>Max Test N</th>
+<th>Post-Test N</th>
+<th>Baseline Conversion</th>
 <th>Split</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>7</td>
-<td>20</td>
+<td>7–20</td>
 <td>80,000</td>
 <td>500,000</td>
 <td>65%</td>
@@ -194,12 +192,11 @@ window.Quarto = {
 </tr>
 </tbody>
 </table>
-<p><br> This setup reflects a common A/B testing environment: experiments run between 7 and 20 days, with a capped sample size during the test phase, followed by rollout to a larger post-test population.</p>
-<p>To evaluate strategic tradeoffs, I simulate two competing approaches:</p>
-<ol type="1">
-<li><strong>Guaranteed Small Wins</strong>: Ten low-risk experiments, each drawing from a tightly clustered distribution of small positive effects.</li>
-<li><strong>One Transformational Experiment</strong>: A single, riskier test drawing from a broader distribution with higher variance, including both harmful and high-upside ideas.</li>
-</ol>
+<p><br> This design reflects a plausible A/B test: short duration with a capped sample, followed by rollout to a larger population.</p>
+</section>
+<section id="strategy-comparison" class="level1">
+<h1>Strategy Comparison</h1>
+<p>The distributions below define each strategy. Guaranteed Small Wins are modeled as tightly clustered positive effects just above baseline, while Big Swings reflect a broader spread — with many harmful ideas but occasional breakthroughs that deliver outsized gains.</p>
 <!-- One-time styles -->
 <style>
 img.framed { border:1px solid #ddd; border-radius:8px; padding:6px; }
@@ -219,7 +216,7 @@ Distribution of Guaranteed Small Wins
 </ul>
 </div><div class="column" style="width:50%;">
 <div class="tile-label">
-Distribution of Transformational Experiment
+Distribution of Big Swing
 </div>
 <p><img src="./assets/big.png" class="framed img-fluid" style="width:100.0%" alt="Expected treatment effects, transformational"></p>
 <ul>
@@ -231,18 +228,25 @@ Distribution of Transformational Experiment
 </ul>
 </div>
 </div>
+<section id="simulation-framework" class="level2">
+<h2 class="anchored" data-anchor-id="simulation-framework">Simulation Framework</h2>
+<p>Each distribution in the <em>Strategy Comparison</em> section represents a <strong>space of ideas</strong>. To evaluate them, I simulate 30,000 A/B tests drawn from each distribution.</p>
+<ul>
+<li><strong>Condition A (Control):</strong> baseline fixed at 65%, with outcomes fluctuating due to random sampling.<br>
+</li>
+<li><strong>Condition B (Treatment):</strong> receives a sampled effect from the corresponding idea space.</li>
+</ul>
+<p>Even when the treatment is encoded with lift, stochastic variation can make it underperform the control in a given run. Results are aggregated across simulations to compare average marginal impact.</p>
 </section>
-<section id="simulation-framework" class="level1">
-<h1>Simulation Framework</h1>
-<p>To evaluate these strategies, I simulate <strong>30,000 randomized A/B tests</strong> in each of two distinct distributions: one representing <strong>Guaranteed Wins</strong>, with tightly clustered positive effects just above baseline, and one representing <strong>Transformational Ideas</strong>, with a wider spread, higher upside, and meaningful downside.</p>
-<p>Each simulation samples a random true effect from its distribution, while decisions are made using noisy, observed outcomes — mirroring real-world test uncertainty. Final comparisons focus on average marginal impact.</p>
-<section id="definition" class="level2">
-<h2 class="anchored" data-anchor-id="definition">Definition</h2>
-<p>A measure that quantifies the risk of making the wrong decision, combining both the likelihood of harm and its expected magnitude:</p>
+<section id="stopping-threshold" class="level2">
+<h2 class="anchored" data-anchor-id="stopping-threshold">Stopping Threshold</h2>
+<p><strong><code>Expected Loss</code></strong> quantifies the chance and magnitude of harm:</p>
 <p><span class="math display">\[
 \text{Expected Loss} = \Pr(\text{harm}) \times \mathbb{E}[\text{Magnitude of Harm}]
 \]</span></p>
-<p>We’ll refer to expected loss simply as <strong><code>Risk</code></strong>. This is used as a stopping criteria below.</p>
+<p>We refer to expected loss as <strong><code>Risk</code></strong>, which serves as the stopping criterion below.</p>
+<p>The <strong>Risk Threshold = 0.025%</strong> was thoughtfully chosen in prior work as a balanced stopping point given the parameters of this experiment design.<br>
+For now the rationale for selection is completely glossed over, but readers are encouraged to ping me for details about its selection. I promise to have a paper on how risk thresholds are selected.</p>
 </section>
 <section id="evaluation-approach" class="level2">
 <h2 class="anchored" data-anchor-id="evaluation-approach">Evaluation Approach</h2>
@@ -277,24 +281,14 @@ Distribution of Transformational Experiment
 <tr class="header">
 <th>Metric</th>
 <th>One Guaranteed Win Experiment</th>
-<th>One Transformational Experiment</th>
+<th>One <strong>Big Swing</strong> Experiment</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><strong>Risk Threshold</strong></td>
-<td>0.025%</td>
-<td>0.025%</td>
-</tr>
-<tr class="even">
-<td><strong>Selected Best Condition</strong></td>
-<td>57.69%</td>
-<td>58.56%</td>
-</tr>
-<tr class="odd">
-<td><strong>Marginal Events vs No Test</strong></td>
-<td>216</td>
-<td>2,261</td>
+<td><strong>Mean Run-time</strong></td>
+<td>N = 59,516 (15 days)</td>
+<td>N = 38,713 (10 days)</td>
 </tr>
 <tr class="even">
 <td><strong>Projected Mean @ Year-End</strong></td>
@@ -302,15 +296,17 @@ Distribution of Transformational Experiment
 <td>65.390%</td>
 </tr>
 <tr class="odd">
-<td><strong>Mean Bayesian Test</strong></td>
-<td>N = 59,516 (15 days)</td>
-<td>N = 38,713 (10 days)</td>
+<td><strong>Marginal Events vs No Test</strong></td>
+<td>216</td>
+<td>2,261</td>
 </tr>
 </tbody>
 </table>
 <p><br></p>
-<p>On average, ten guaranteed-win experiments produce ~2,160 marginal events — but require ~5.8 million users across the full test and post-test lifecycle.<br> One transformational experiment delivers a comparable ~2,261 marginal events on average, using just 580k users and completing 33% faster.</p>
-<p>While both strategies yield similar impact on average, transformational testing is far more efficient — achieving comparable value with one-tenth the traffic on average.</p>
+<ul>
+<li>Ten <strong>Guaranteed Wins</strong> are required to nearly match the value of an average <strong>Big Swing</strong> experiment.</li>
+<li><strong>Big Swing</strong> experiments ran 33% faster on average.</li>
+</ul>
 </section>
 </section>
 <section id="home-runs-outweigh-strikeouts" class="level1">
@@ -318,11 +314,11 @@ Distribution of Transformational Experiment
 <p>How can a strategy with a 60% strikeout rate still outperform?</p>
 <p>Because when a transformational idea hits, it hits big. Risk-based testing helps cut losses early while allowing strong performers to scale — letting a single home run outweigh several duds.</p>
 <p>That’s the asymmetric nature of upside: most variants may underperform, but the rare wins more than make up the difference.</p>
-<div id="63bed2ad" class="cell" data-execution_count="1">
+<div id="83b9bcc3" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-display">
-<div>                            <div id="a09d9c20-573b-4086-9511-572426c191a8" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("a09d9c20-573b-4086-9511-572426c191a8")) {                    Plotly.newPlot(                        "a09d9c20-573b-4086-9511-572426c191a8",                        [{"marker":{"color":["red","red","red","red","green","green","green"]},"text":["-274","-200","-250","-390","+1500","+3500","+7300"],"textposition":"outside","x":["97","98","99","99.5","100.5","101","102"],"y":[-274,-200,-250,-390,1500,3500,7300],"type":"bar"}],                        {"template":{"data":{"barpolar":[{"marker":{"line":{"color":"white","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"white","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"#C8D4E3","linecolor":"#C8D4E3","minorgridcolor":"#C8D4E3","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"#C8D4E3","linecolor":"#C8D4E3","minorgridcolor":"#C8D4E3","startlinecolor":"#2a3f5f"},"type":"carpet"}],"choropleth":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"choropleth"}],"contourcarpet":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"contourcarpet"}],"contour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"contour"}],"heatmapgl":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"heatmapgl"}],"heatmap":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"heatmap"}],"histogram2dcontour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2dcontour"}],"histogram2d":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2d"}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"mesh3d":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"mesh3d"}],"parcoords":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"parcoords"}],"pie":[{"automargin":true,"type":"pie"}],"scatter3d":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatter3d"}],"scattercarpet":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattercarpet"}],"scattergeo":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergeo"}],"scattergl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergl"}],"scattermapbox":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattermapbox"}],"scatterpolargl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolargl"}],"scatterpolar":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolar"}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"scatterternary":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterternary"}],"surface":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"surface"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}]},"layout":{"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"autotypenumbers":"strict","coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]],"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]},"colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"geo":{"bgcolor":"white","lakecolor":"white","landcolor":"white","showlakes":true,"showland":true,"subunitcolor":"#C8D4E3"},"hoverlabel":{"align":"left"},"hovermode":"closest","mapbox":{"style":"light"},"margin":{"b":0,"l":0,"r":0,"t":30},"paper_bgcolor":"white","plot_bgcolor":"white","polar":{"angularaxis":{"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":""},"bgcolor":"white","radialaxis":{"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":""}},"scene":{"xaxis":{"backgroundcolor":"white","gridcolor":"#DFE8F3","gridwidth":2,"linecolor":"#EBF0F8","showbackground":true,"ticks":"","zerolinecolor":"#EBF0F8"},"yaxis":{"backgroundcolor":"white","gridcolor":"#DFE8F3","gridwidth":2,"linecolor":"#EBF0F8","showbackground":true,"ticks":"","zerolinecolor":"#EBF0F8"},"zaxis":{"backgroundcolor":"white","gridcolor":"#DFE8F3","gridwidth":2,"linecolor":"#EBF0F8","showbackground":true,"ticks":"","zerolinecolor":"#EBF0F8"}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"ternary":{"aaxis":{"gridcolor":"#DFE8F3","linecolor":"#A2B1C6","ticks":""},"baxis":{"gridcolor":"#DFE8F3","linecolor":"#A2B1C6","ticks":""},"bgcolor":"white","caxis":{"gridcolor":"#DFE8F3","linecolor":"#A2B1C6","ticks":""}},"title":{"x":0.05},"xaxis":{"automargin":true,"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":"","title":{"standoff":15},"zerolinecolor":"#EBF0F8","zerolinewidth":2},"yaxis":{"automargin":true,"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":"","title":{"standoff":15},"zerolinecolor":"#EBF0F8","zerolinewidth":2}}},"yaxis":{"title":{"text":"Marginal Events (Conversions)"},"zeroline":true,"zerolinecolor":"black"},"title":{"text":"Marginal Events by Index-to-Control (ITC) Value"},"xaxis":{"title":{"text":"ITC Value"}},"bargap":0.3},                        {"responsive": true}                    ).then(function(){
+<div>                            <div id="80a648a2-3b4b-45d3-a3d6-86f856e01502" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("80a648a2-3b4b-45d3-a3d6-86f856e01502")) {                    Plotly.newPlot(                        "80a648a2-3b4b-45d3-a3d6-86f856e01502",                        [{"marker":{"color":["red","red","red","red","green","green","green"]},"text":["-274","-200","-250","-390","+1500","+3500","+7300"],"textposition":"outside","x":["97","98","99","99.5","100.5","101","102"],"y":[-274,-200,-250,-390,1500,3500,7300],"type":"bar"}],                        {"template":{"data":{"barpolar":[{"marker":{"line":{"color":"white","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"white","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"#C8D4E3","linecolor":"#C8D4E3","minorgridcolor":"#C8D4E3","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"#C8D4E3","linecolor":"#C8D4E3","minorgridcolor":"#C8D4E3","startlinecolor":"#2a3f5f"},"type":"carpet"}],"choropleth":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"choropleth"}],"contourcarpet":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"contourcarpet"}],"contour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"contour"}],"heatmapgl":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"heatmapgl"}],"heatmap":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"heatmap"}],"histogram2dcontour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2dcontour"}],"histogram2d":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2d"}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"mesh3d":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"mesh3d"}],"parcoords":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"parcoords"}],"pie":[{"automargin":true,"type":"pie"}],"scatter3d":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatter3d"}],"scattercarpet":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattercarpet"}],"scattergeo":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergeo"}],"scattergl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergl"}],"scattermapbox":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattermapbox"}],"scatterpolargl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolargl"}],"scatterpolar":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolar"}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"scatterternary":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterternary"}],"surface":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"surface"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}]},"layout":{"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"autotypenumbers":"strict","coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]],"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]},"colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"geo":{"bgcolor":"white","lakecolor":"white","landcolor":"white","showlakes":true,"showland":true,"subunitcolor":"#C8D4E3"},"hoverlabel":{"align":"left"},"hovermode":"closest","mapbox":{"style":"light"},"margin":{"b":0,"l":0,"r":0,"t":30},"paper_bgcolor":"white","plot_bgcolor":"white","polar":{"angularaxis":{"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":""},"bgcolor":"white","radialaxis":{"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":""}},"scene":{"xaxis":{"backgroundcolor":"white","gridcolor":"#DFE8F3","gridwidth":2,"linecolor":"#EBF0F8","showbackground":true,"ticks":"","zerolinecolor":"#EBF0F8"},"yaxis":{"backgroundcolor":"white","gridcolor":"#DFE8F3","gridwidth":2,"linecolor":"#EBF0F8","showbackground":true,"ticks":"","zerolinecolor":"#EBF0F8"},"zaxis":{"backgroundcolor":"white","gridcolor":"#DFE8F3","gridwidth":2,"linecolor":"#EBF0F8","showbackground":true,"ticks":"","zerolinecolor":"#EBF0F8"}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"ternary":{"aaxis":{"gridcolor":"#DFE8F3","linecolor":"#A2B1C6","ticks":""},"baxis":{"gridcolor":"#DFE8F3","linecolor":"#A2B1C6","ticks":""},"bgcolor":"white","caxis":{"gridcolor":"#DFE8F3","linecolor":"#A2B1C6","ticks":""}},"title":{"x":0.05},"xaxis":{"automargin":true,"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":"","title":{"standoff":15},"zerolinecolor":"#EBF0F8","zerolinewidth":2},"yaxis":{"automargin":true,"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":"","title":{"standoff":15},"zerolinecolor":"#EBF0F8","zerolinewidth":2}}},"yaxis":{"title":{"text":"Marginal Events (Conversions)"},"zeroline":true,"zerolinecolor":"black"},"title":{"text":"Marginal Events by Index-to-Control (ITC) Value"},"xaxis":{"title":{"text":"ITC Value"}},"bargap":0.3},                        {"responsive": true}                    ).then(function(){
                             
-var gd = document.getElementById('a09d9c20-573b-4086-9511-572426c191a8');
+var gd = document.getElementById('80a648a2-3b4b-45d3-a3d6-86f856e01502');
 var x = new MutationObserver(function (mutations, observer) {{
         var display = window.getComputedStyle(gd).display;
         if (!display || display === 'none') {{
@@ -353,7 +349,9 @@ if (outputEl) {{
 | Marginal Events | -274   | -200   | -250   | -400   | +1500  | +3500  | +7300  |
 -->
 <p><br></p>
-<p>Risk-based testing makes transformational strategies more efficient and impactful — a single high-performing variant can easily outweigh multiple duds, justifying the risk.</p>
+<ul>
+<li>A single high-performing variant can easily outweigh multiple duds, justifying the risk.</li>
+</ul>
 </section>
 <section id="conclusion" class="level1">
 <h1>Conclusion</h1>

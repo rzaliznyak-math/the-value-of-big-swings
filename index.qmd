@@ -1,6 +1,6 @@
 ---
 title: "The Value of Big Swings"
-subtitle: "Why Playing It Safe in A/B Testing Might Be Holding You Back"
+subtitle: "Why Bold Experiments Deliver More Value with Less Traffic"
 author: "Russ Zaliznyak <[rzaliznyak@gmail.com](mailto:rzaliznyak@gmail.com)>"
 date: "2025-08-25"
 execute: 
@@ -14,39 +14,37 @@ format:
 
 # TL/DR
 
-A/B testing is a tool for driving business outcomes like conversion, retention, and revenue. But in practice, experimenters often face a strategic dilemma:
+Smart A/B testing helps to maximize business metrics like conversion, retention, and revenue. But experimenters often face a strategic dilemma:
 
 - **Play it safe** with frequent, incremental wins  
-- **Swing big** with fewer, riskier tests that promise outsized returns  
+- **Swing big** with fewer, riskier tests that could deliver big rewards  
 
-This tradeoff is well-known in the experimentation community — a recurring challenge when traffic is limited and the stakes are high.
+This tradeoff is a recurring challenge when traffic is limited and profits need to grow.
 
-This paper compares two strategies:
+This paper compares two distinct strategies:
 
-- **Guaranteed Small Wins** — ten low-risk bets with small, consistent gains  
-- **Transformational Tests** — a single high-variance bet that could flop — or deliver a breakthrough
+1. **Guaranteed Small Wins**: ten low-risk bets with small, consistent gains  
+2. **Big Swing**: single high-variance transformational bet that could flop — or deliver a breakthrough
 
 Which strategy delivers more value on average?
 
 
 ---
 
-# Experiment Design 
+# A/B Test Design
 
-To ground this comparison in a concrete scenario, I define a base experiment with the following parameters:
+To ground the comparison, I define a base experiment with these parameters:
 
-| Min (Test Days) | Max (Test Days) | Max (Test N) | Post Test N | Baseline | Split |
-|-----------------|-----------------|--------------|-------------|----------|-------|
-| 7               | 20              | 80,000       | 500,000     | 65%      | 50/50 |
+| Test Days (Min–Max) | Max Test N | Post-Test N | Baseline Conversion | Split |
+|----------------------|------------|-------------|---------------------|-------|
+| 7–20                | 80,000     | 500,000     | 65%                 | 50/50 |
 
 <br>
-This setup reflects a common A/B testing environment: experiments run between 7 and 20 days, with a capped sample size during the test phase, followed by rollout to a larger post-test population.
+This design reflects a plausible A/B test: short duration with a capped sample, followed by rollout to a larger population.  
 
-To evaluate strategic tradeoffs, I simulate two competing approaches:
+# Strategy Comparison
 
-1. **Guaranteed Small Wins**: Ten low-risk experiments, each drawing from a tightly clustered distribution of small positive effects.
-2. **One Transformational Experiment**: A single, riskier test drawing from a broader distribution with higher variance, including both harmful and high-upside ideas.
-
+The distributions below define each strategy. Guaranteed Small Wins are modeled as tightly clustered positive effects just above baseline, while Big Swings reflect a broader spread — with many harmful ideas but occasional breakthroughs that deliver outsized gains.
 
 <!-- One-time styles -->
 <style>
@@ -65,7 +63,7 @@ img.framed { border:1px solid #ddd; border-radius:8px; padding:6px; }
 :::
 
 ::: {.column width="50%"}
-<div class="tile-label">Distribution of Transformational Experiment</div>
+<div class="tile-label">Distribution of Big Swing</div>
 ![](./assets/big.png){fig-alt="Expected treatment effects, transformational" width="100%" .framed}
 
 - μ = 99.5, σ = 2.25  
@@ -74,22 +72,29 @@ img.framed { border:1px solid #ddd; border-radius:8px; padding:6px; }
 :::
 :::
 
+## Simulation Framework
 
-# Simulation Framework
+Each distribution in the *Strategy Comparison* section represents a **space of ideas**. To evaluate them, I simulate 30,000 A/B tests drawn from each distribution.
 
-To evaluate these strategies, I simulate **30,000 randomized A/B tests** in each of two distinct distributions: one representing **Guaranteed Wins**, with tightly clustered positive effects just above baseline, and one representing **Transformational Ideas**, with a wider spread, higher upside, and meaningful downside.
+- **Condition A (Control):** baseline fixed at 65%, with outcomes fluctuating due to random sampling.  
+- **Condition B (Treatment):** receives a sampled effect from the corresponding idea space.
 
-Each simulation samples a random true effect from its distribution, while decisions are made using noisy, observed outcomes — mirroring real-world test uncertainty. Final comparisons focus on average marginal impact.
+Even when the treatment is encoded with lift, stochastic variation can make it underperform the control in a given run. Results are aggregated across simulations to compare average marginal impact.
 
-## Definition
 
-A measure that quantifies the risk of making the wrong decision, combining both the likelihood of harm and its expected magnitude:
+## Stopping Threshold
+
+**`Expected Loss`** quantifies the chance and magnitude of harm:
 
 $$
 \text{Expected Loss} = \Pr(\text{harm}) \times \mathbb{E}[\text{Magnitude of Harm}]
 $$
 
-We’ll refer to expected loss simply as **`Risk`**. This is used as a stopping criteria below.
+We refer to expected loss as **`Risk`**, which serves as the stopping criterion below.  
+
+The **Risk Threshold = 0.025%** was thoughtfully chosen in prior work as a balanced stopping point given the parameters of this experiment design.  
+For now the rationale for selection is completely glossed over, but readers are encouraged to ping me for details about its selection. I promise to have a paper on how risk thresholds are selected.
+
 
 
 ## Evaluation Approach
@@ -110,21 +115,17 @@ We’ll refer to expected loss simply as **`Risk`**. This is used as a stopping 
 
 All metrics shown are based on 30,000 simulations and represent expected values, i.e., average outcomes aggregated across all simulated experiments --- with each simulation drawing a random treatment effect from its distribution of effects.
 
-| Metric                        | One Guaranteed Win Experiment | One Transformational Experiment |
+| Metric                        | One Guaranteed Win Experiment | One **Big Swing** Experiment |
 |------------------------------|-------------------------------|---------------------------------|
-| **Risk Threshold**           | 0.025%                        | 0.025%                          |
-| **Selected Best Condition**  | 57.69%                        | 58.56%                          |
-| **Marginal Events vs No Test** | 216                          | 2,261                           |
+| **Mean Run-time**       | N = 59,516 (15 days)          | N = 38,713 (10 days)            |
 | **Projected Mean @ Year-End** | 65.037%                      | 65.390%                         |
-| **Mean Bayesian Test**       | N = 59,516 (15 days)          | N = 38,713 (10 days)            |
+| **Marginal Events vs No Test** | 216                          | 2,261                           |
 
 
 <br>
 
-On average, ten guaranteed-win experiments produce ~2,160 marginal events — but require ~5.8 million users across the full test and post-test lifecycle.<br>
-One transformational experiment delivers a comparable ~2,261 marginal events on average, using just 580k users and completing 33% faster.
-
-While both strategies yield similar impact on average, transformational testing is far more efficient — achieving comparable value with one-tenth the traffic on average.
+- Ten **Guaranteed Wins** are required to nearly match the value of an average **Big Swing** experiment.
+- **Big Swing** experiments ran 33% faster on average.
 
 # Home Runs Outweigh Strikeouts
 
@@ -181,7 +182,7 @@ fig.show()
 
 <br>
 
-Risk-based testing makes transformational strategies more efficient and impactful — a single high-performing variant can easily outweigh multiple duds, justifying the risk.
+- A single high-performing variant can easily outweigh multiple duds, justifying the risk.
 
 
 # Conclusion
