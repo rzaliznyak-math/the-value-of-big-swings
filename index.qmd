@@ -253,11 +253,11 @@ fig.show()
 
 # Conclusion  
 
-Both strategies can drive impact, but they differ in efficiency. Guaranteed Wins require more users and time, while Big Swings, on average, deliver faster results and far greater payoff per test. However, Big Swings come with high variance: many attempts will underperform, but a few breakthroughs more than compensate. This asymmetric upside makes them highly efficient under traffic and time constraints — provided results are managed with a smart decision framework.  
+**Big Swing** experiments consistently run faster and generate more value on average. The reason is straightforward: even though many attempts miss, the occasional breakthrough delivers such outsized gains that it more than offsets the strikeouts. This asymmetric payoff structure makes bold bets highly efficient under traffic and time constraints.  
 
 # Recommendation  
 
-Lean toward transformational tests, because on average they deliver more value per user and per day. But balance is key: the high variance of Big Swings means not every test will succeed. Mixing in smaller, lower-risk wins provides stability while preserving the upside potential of bold bets. A portfolio approach — steadiness from small wins plus breakthrough gains from Big Swings — gives the best path to sustainable impact.  
+Prioritize Big Swings to capture that upside, but recognize their high variance — not every test will succeed. Balance matters: combine transformational bets, which create breakthroughs, with smaller wins that provide stability. This mix ensures experiments both move fast and deliver sustainable impact.  
 
 
 ---
