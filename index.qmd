@@ -2,7 +2,7 @@
 title: "The Value of Big Swings"
 subtitle: "Why Bold Experiments Deliver More Value with Less Traffic"
 author: "Russ Zaliznyak <[rzaliznyak@gmail.com](mailto:rzaliznyak@gmail.com)>"
-date: "2025-08-25"
+date: "2025-08-29"
 execute: 
   echo: false
 format: 
