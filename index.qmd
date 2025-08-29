@@ -35,9 +35,9 @@ Which strategy delivers more value on average?
 
 To ground the comparison, I define a base experiment with these parameters:
 
-| Test Days (Min–Max) | Max Test N | Post-Test N | Baseline Conversion | Split |
-|----------------------|------------|-------------|---------------------|-------|
-| 7–20                | 80,000     | 500,000     | 65%                 | 50/50 |
+| Min (Test Days) | Max (Test Days) | Max (Test N) | Post Test N | Baseline | Split |
+|-----------------|-----------------|--------------|-------------|----------|-------|
+| 7               | 20              | 80,000       | 500,000     | 65%      | 50/50 |
 
 <br>
 This design reflects a plausible A/B test: short duration with a capped sample, followed by rollout to a larger population.  
@@ -77,10 +77,71 @@ img.framed { border:1px solid #ddd; border-radius:8px; padding:6px; }
 Each distribution in the *Strategy Comparison* section represents a **space of ideas**. To evaluate them, I simulate 30,000 A/B tests drawn from each distribution.
 
 - **Condition A (Control):** baseline fixed at 65%, with outcomes fluctuating due to random sampling.  
-- **Condition B (Treatment):** receives a sampled effect from the corresponding idea space.
+- **Condition B (Treatment):** receives a random sampled effect from the corresponding distrubtion.
 
 Even when the treatment is encoded with lift, stochastic variation can make it underperform the control in a given run. Results are aggregated across simulations to compare average marginal impact.
 
+::: {columns}
+
+::: {.column width="45%"}
+```{python}
+#| echo: true
+#| code-fold: true
+#| code-fold-show: true
+#| code-summary: "Simulation Example (Control)"
+from numpy.random import binomial
+
+total_users = int(8e4)
+control_users = int(total_users / 2)
+number_days = 20
+control_users_per_day = (
+    control_users / number_days
+)
+control_baseline = 0.65
+
+control_conversions_by_day = binomial(
+    control_users,
+    control_baseline,
+    number_days,
+)
+
+
+```
+:::
+
+
+::: {.column width="45%"}
+```{python}
+#| echo: true
+#| code-fold: true
+#| code-fold-show: true
+#| code-summary: "Simulation Example (Treatment)"
+from numpy.random import normal
+
+treatment_users = int(total_users / 2)
+treatment_users_per_day = (
+    treatment_users / number_days
+)
+index_to_control = (
+    normal(99.5, 2.5, 1) / 100
+)
+treatment_mean = (
+    control_baseline * index_to_control
+)
+
+treatment_conversions_by_day = binomial(
+    treatment_users,
+    treatment_mean,
+    number_days,
+)
+
+
+
+```
+:::
+
+
+:::
 
 ## Stopping Threshold
 
@@ -92,12 +153,13 @@ $$
 
 We refer to expected loss as **`Risk`**, which serves as the stopping criterion below.  
 
-The **Risk Threshold = 0.025%** was thoughtfully chosen in prior work as a balanced stopping point given the parameters of this experiment design.  
+The **Risk Threshold = 0.025%** was thoughtfully chosen in advance of the experiment as a balanced stopping point given the parameters of this experiment design.  
+
 For now the rationale for selection is completely glossed over, but readers are encouraged to ping me for details about its selection. I promise to have a paper on how risk thresholds are selected.
 
 
 
-## Evaluation Approach
+## Simulation Evaluation
 
 1. For each simulation, and each day on or after `Min (Test Days)`:
    - Compute **Risk (expected loss)** for both control and treatment conditions.
@@ -118,20 +180,24 @@ All metrics shown are based on 30,000 simulations and represent expected values,
 | Metric                        | One Guaranteed Win Experiment | One **Big Swing** Experiment |
 |------------------------------|-------------------------------|---------------------------------|
 | **Mean Run-time**       | N = 59,516 (15 days)          | N = 38,713 (10 days)            |
-| **Projected Mean @ Year-End** | 65.037%                      | 65.390%                         |
+| **Projected Mean @ Year-End** | 65.037% (100.06 ITC)                      | 65.390% (100.60 ITC)                     |
 | **Marginal Events vs No Test** | 216                          | 2,261                           |
 
 
 <br>
 
-- Ten **Guaranteed Wins** are required to nearly match the value of an average **Big Swing** experiment.
-- **Big Swing** experiments ran 33% faster on average.
+Compared to a **Guaranteed Win** experiment, the **Big Swing** strategy shows clear advantages:
+
+1. Runs ~33% faster on average (10 days vs 15), freeing traffic sooner.  
+2. Produces a higher average outcome per experiment (65.39% vs 65.04%), a meaningful gap at scale.  
+3. Generates ~2,261 additional conversions vs only 216, since marginal events scale directly from the projected mean difference.  
+
 
 # Home Runs Outweigh Strikeouts
 
-How can a strategy with a 60% strikeout rate still outperform?
+How can a strategy with a 60% strikeout rate still outperform 10 guaranteed wins?
 
-Because when a transformational idea hits, it hits big. Risk-based testing helps cut losses early while allowing strong performers to scale — letting a single home run outweigh several duds.
+Because when a transformational idea hits, it hits big. Smart experiments cut losses early while allowing strong performers to scale — letting a single home run outweigh several duds.
 
 That’s the asymmetric nature of upside: most variants may underperform, but the rare wins more than make up the difference.
 
