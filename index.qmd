@@ -44,7 +44,7 @@ This design reflects a plausible A/B test: short duration with a capped sample, 
 
 # Strategy Comparison
 
-The distributions below define each strategy. Guaranteed Small Wins are modeled as tightly clustered positive effects just above baseline, while Big Swings reflect a broader spread — with many harmful ideas but occasional breakthroughs that deliver outsized gains.
+The distributions below define each strategy. Guaranteed Small Wins are modeled as tightly clustered positive effects just above baseline, while Big Swings reflect a broader spread — with many harmful ideas but occasional breakthroughs that deliver big gains.
 
 <!-- One-time styles -->
 <style>
@@ -77,13 +77,13 @@ img.framed { border:1px solid #ddd; border-radius:8px; padding:6px; }
 Each distribution in the *Strategy Comparison* section represents a **space of ideas**. To evaluate them, I simulate 30,000 A/B tests drawn from each distribution.
 
 - **Condition A (Control):** baseline fixed at 65%, with outcomes fluctuating due to random sampling.  
-- **Condition B (Treatment):** receives a random sampled effect from the corresponding distrubtion.
+- **Condition B (Treatment):** true conversion rate is shifted by a random draw from the chosen distribution.
 
 Even when the treatment is encoded with lift, stochastic variation can make it underperform the control in a given run. Results are aggregated across simulations to compare average marginal impact.
 
 ::: {columns}
 
-::: {.column width="45%"}
+::: {.column width="48%"}
 ```{python}
 #| echo: true
 #| code-fold: true
@@ -110,7 +110,7 @@ control_conversions_by_day = binomial(
 :::
 
 
-::: {.column width="45%"}
+::: {.column width="48%"}
 ```{python}
 #| echo: true
 #| code-fold: true
@@ -145,13 +145,13 @@ treatment_conversions_by_day = binomial(
 
 ## Stopping Threshold
 
-**`Expected Loss`** quantifies the chance and magnitude of harm:
+**`Expected Loss`** is used as our stopping threshold.
 
 $$
 \text{Expected Loss} = \Pr(\text{harm}) \times \mathbb{E}[\text{Magnitude of Harm}]
 $$
 
-We refer to expected loss as **`Risk`**, which serves as the stopping criterion below.  
+We refer to expected loss as **`Risk`**, which serves only as the stopping criterion below.  
 
 The **Risk Threshold = 0.025%** was thoughtfully chosen in advance of the experiment as a balanced stopping point given the parameters of this experiment design.  
 
@@ -175,7 +175,7 @@ For now the rationale for selection is completely glossed over, but readers are 
 
 ## Results
 
-All metrics shown are based on 30,000 simulations and represent expected values, i.e., average outcomes aggregated across all simulated experiments --- with each simulation drawing a random treatment effect from its distribution of effects.
+All metrics shown are based on 30,000 simulations and represent expected values, i.e., average outcomes aggregated across all simulated experiments --- with each simulation drawing a random treatment effect from its distribution.
 
 | Metric                        | One Guaranteed Win Experiment | One **Big Swing** Experiment |
 |------------------------------|-------------------------------|---------------------------------|
@@ -195,11 +195,12 @@ Compared to a **Guaranteed Win** experiment, the **Big Swing** strategy shows cl
 
 # Home Runs Outweigh Strikeouts
 
-How can a strategy with a 60% strikeout rate still outperform 10 guaranteed wins?
+How can a strategy with a 60% strikeout rate still outperform 10 guaranteed wins?  
 
-Because when a transformational idea hits, it hits big. Smart experiments cut losses early while allowing strong performers to scale — letting a single home run outweigh several duds.
+Because when a transformational idea hits, it hits big. Smart experiments cut losses early while allowing strong performers to scale --- letting a single home run outweigh several duds.
 
-That’s the asymmetric nature of upside: most variants may underperform, but the rare wins more than make up the difference.
+That’s the asymmetric nature of upside: most variants underperform, but rare wins more than make up the difference. And that’s why one Big Swing can match the impact of 10 small wins, while using only a fraction of the traffic.  
+
 
 
 
@@ -253,12 +254,18 @@ fig.show()
 
 # Conclusion  
 
-**Big Swing** experiments consistently run faster and generate more value on average. The reason is straightforward: even though many attempts miss, the occasional breakthrough delivers such outsized gains that it more than offsets the strikeouts. This asymmetric payoff structure makes bold bets highly efficient under traffic and time constraints.  
+**Big Swing** experiments run faster and deliver greater average value. While many attempts miss, rare breakthroughs generate such huge gains that they transform the overall outcome. Strikeouts are common, but home runs change the game --- making bold bets a highly efficient strategy when traffic and time are limited.  
 
 # Recommendation  
 
-Prioritize Big Swings to capture that upside, but recognize their high variance — not every test will succeed. Balance matters: combine transformational bets, which create breakthroughs, with smaller wins that provide stability. This mix ensures experiments both move fast and deliver sustainable impact.  
+Prioritize bold bets to capture this speed and upside, but manage them within a balanced portfolio. Transformational experiments create breakthroughs; smaller wins provide stability. Together, this mix keeps experimentation fast and sustainable.
 
+> Bold swings drive breakthroughs; balance makes them sustainable.
+
+
+# Acknowledgements
+
+Big THANK YOU to my colleague Joseph Powers, PhD, who introduced me to Quarto and using simulation studies to make my work life easier.
 
 ---
 
