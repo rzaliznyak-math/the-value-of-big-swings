@@ -190,7 +190,7 @@ Compared to a **Guaranteed Win** experiment, the **Big Swing** strategy shows cl
 
 1. Runs ~33% faster on average (10 days vs 15), freeing traffic sooner.  
 2. Produces a higher average outcome per experiment (65.39% vs 65.04%), a meaningful gap at scale.  
-3. Generates ~2,261 additional conversions vs only 216, since marginal events scale directly from the projected mean difference.  
+3. Generates ~2,261 additional conversions vs only 216 on average. Marginal events scale directly from the projected mean difference.  
 
 
 # Home Runs Outweigh Strikeouts
@@ -204,7 +204,7 @@ That’s the asymmetric nature of upside: most variants may underperform, but th
 
 
 ```{python}
-
+#| fig-cap: A single high-performing variant can easily outweigh multiple duds, justifying the risk.
 import plotly.graph_objects as go
 
 # Data
@@ -248,20 +248,17 @@ fig.show()
 
 <br>
 
-- A single high-performing variant can easily outweigh multiple duds, justifying the risk.
 
 
-# Conclusion
 
-Both strategies yield similar marginal impact on average — but transformational testing is **far more efficient**, requiring fewer users, less time, and fewer tests to achieve comparable results.
+# Conclusion  
 
-While riskier, the upside of transformational experiments dramatically outweighs the downside when paired with a smart decision framework. In environments where time and traffic are limited, this efficiency becomes a strategic advantage.
+Both strategies can drive impact, but they differ in efficiency. Guaranteed Wins require more users and time, while Big Swings, on average, deliver faster results and far greater payoff per test. However, Big Swings come with high variance: many attempts will underperform, but a few breakthroughs more than compensate. This asymmetric upside makes them highly efficient under traffic and time constraints — provided results are managed with a smart decision framework.  
 
-# Recommendation
+# Recommendation  
 
-**Favor transformational tests when possible** because they unlock greater value per user and per test.  
+Lean toward transformational tests, because on average they deliver more value per user and per day. But balance is key: the high variance of Big Swings means not every test will succeed. Mixing in smaller, lower-risk wins provides stability while preserving the upside potential of bold bets. A portfolio approach — steadiness from small wins plus breakthrough gains from Big Swings — gives the best path to sustainable impact.  
 
-That said, a **hybrid approach** can provide balance: guaranteed wins deliver stability and coverage, while bold swings create room for breakthrough gains. Together, they offer a path that scales.
 
 ---
 
