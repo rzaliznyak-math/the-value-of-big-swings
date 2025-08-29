@@ -192,6 +192,8 @@ Compared to a **Guaranteed Win** experiment, the **Big Swing** strategy shows cl
 2. Produces a higher average outcome per experiment (65.39% vs 65.04%), a meaningful gap at scale.  
 3. Generates ~2,261 additional conversions vs only 216 on average. Marginal events scale directly from the projected mean difference.  
 
+We need approximately 10 **Guaranteed Wins** to average the same effect as one **Big Swing**.
+
 
 # Home Runs Outweigh Strikeouts
 
