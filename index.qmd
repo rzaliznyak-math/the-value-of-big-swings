@@ -19,7 +19,7 @@ Smart A/B testing helps to maximize business metrics like conversion, retention,
 - **Play it safe** with frequent, incremental wins  
 - **Swing big** with fewer, riskier tests that could deliver big rewards  
 
-This tradeoff is a recurring challenge when traffic is limited and profits need to grow.
+This tradeoff is a recurring challenge when traffic is limited and profits need to grow. 
 
 This paper compares two distinct strategies:
 
